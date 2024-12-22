@@ -14,15 +14,9 @@ jobs:
           cd frontend
           npm ci 
           npm run build
-          ls
-    - name: Add SSH key
-      run: |
-          mkdir -p /home/runner/.ssh
-          eval `ssh-agent -s`
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
-          echo "${{ secrets.SSH_KEY }}" > /home/runner/.ssh/id_ed25519
-          chmod 600 /home/runner/.ssh/id_ed25519
-          ssh-add /home/runner/.ssh/id_ed25519
-    - name: push2serv
-#      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -v
-      run: scp -r frontend/build ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/static/
+          sudo apt-get install zip
+          zip -r builded.zip build
+    - uses: actions/upload-artifact@v2
+      with:
+        name: front
+        path: frontend/builded.zip
