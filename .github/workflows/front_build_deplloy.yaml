@@ -16,7 +16,7 @@ jobs:
           npm run build
           sudo apt-get install zip
           zip -r builded.zip build
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: front
         path: frontend/builded.zip
